@@ -36,9 +36,9 @@ export default function FAQSection() {
   return (
     <section className="faq-section">
       <div className="faq-container">
-        <h2 style={{ fontWeight:500 ,fontSize: "3.5rem", textAlign: "start", marginBottom: "3rem"}}>
+        <h2 >
           Frequently <br />
-          <span style={{ fontStyle:'italic', fontWeight:300,}}>Asked</span> <br />
+          <span>Asked</span> <br />
           Questions
         </h2>
         <div className="faq-list">

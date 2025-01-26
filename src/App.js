@@ -71,7 +71,7 @@ function App() {
               />
               <button className="btn btn--primary">Try Now →</button>
             </div>
-            <div style={{ marginTop: "5rem" }} className='image-container'>
+            <div className='image-container'>
               <img
                 src={profcard}
                 alt="Profile"

@@ -24,6 +24,12 @@ $gray-600: #6c757d;
   }
 }
 
+@mixin mobile {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
 // Animations
 @keyframes fadeIn {
   from {
