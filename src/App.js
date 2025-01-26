@@ -45,8 +45,8 @@ function App() {
           <div className={`navbar__actions ${isMenuOpen ? 'active' : ''}`}>
             <button className="btn btn--secondary">Login/Signup</button>
             <button className="btn btn--primary">
-              Looking for job?
-              <FiExternalLink />
+              Looking for job?{" "}
+              <FiExternalLink size={16} />
             </button>
           </div>
         </nav>
