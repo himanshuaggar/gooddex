@@ -6,13 +6,14 @@ import profcard from './assets/card.png';
 import CompanyShowcase from './components/Company'
 import BentoGrid from './components/BentoGrid';
 import Testimonials from './components/Testimonials';
-import SmartHiring from './components/SmartHiring'; 
-import HowItWorks from './components/HowItWorks'; 
+import SmartHiring from './components/SmartHiring';
+import HowItWorks from './components/HowItWorks';
 import FAQSection from './components/FAQ';
 import Banner from './components/Banner';
 import Footer from './components/Footer';
 import { FiExternalLink } from 'react-icons/fi';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { ChevronDown } from 'lucide-react';
 
 
 function App() {
@@ -36,10 +37,38 @@ function App() {
           </button>
 
           <div className={`navbar__menu ${isMenuOpen ? 'active' : ''}`}>
-            <div className="dropdown">Products</div>
-            <div className="dropdown">Company</div>
-            <div className="link">Blogs</div>
-            <div className="link">Pricing</div>
+            <a
+              href="https://goodspace.ai/products"
+              className="dropdown"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Products <ChevronDown size={16} />
+            </a>
+            <a
+              href="https://goodspace.ai/company"
+              className="dropdown"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Company <ChevronDown size={16} />
+            </a>
+            <a
+              href="https://goodspace.ai/blogs"
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Blogs
+            </a>
+            <a
+              href="https://goodspace.ai/pricing"
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Pricing
+            </a>
           </div>
 
           <div className={`navbar__actions ${isMenuOpen ? 'active' : ''}`}>
@@ -101,7 +130,7 @@ function App() {
         <FAQSection />
         <Banner />
         <div></div>
-        <br/>
+        <br />
         <Footer />
       </div>
     </div>

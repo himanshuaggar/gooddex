@@ -136,6 +136,11 @@
 
     .dropdown,
     .link {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       cursor: pointer;
       color: $gray-600;
 
@@ -177,6 +182,11 @@
 
       .dropdown,
       .link {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
         width: 80%;
         max-width: 300px;
         text-align: center;
