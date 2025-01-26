@@ -28,16 +28,16 @@ export default function Footer() {
               </a>
             </div>
             <div className="social-links">
-              <a href="#" aria-label="Instagram">
+              <a href="#" >
                 <FaInstagram color="#fff"  size={40} />
               </a>
-              <a href="#" aria-label="LinkedIn">
+              <a href="#" >
                 <FaLinkedinIn color="#fff" size={40} />
               </a>
-              <a href="#" aria-label="Facebook">
+              <a href="#">
                 <FaFacebookF color="#fff" size={35} />
               </a>
-              <a href="#" aria-label="Twitter">
+              <a href="#">
                 <FaTwitter color="#fff" size={40} />
               </a>
             </div>
