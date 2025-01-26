@@ -1,0 +1,48 @@
+// Colors
+$primary-blue: #0066ff;
+$light-blue: #e5edff;
+$white: #ffffff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-600: #6c757d;
+
+// Mixins
+@mixin card {
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+@mixin button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
