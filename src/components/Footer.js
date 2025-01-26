@@ -4,24 +4,6 @@ import goodspace from "../assets/goodspace.png";
 import { Mail, Phone } from "lucide-react";
 
 export default function Footer() {
-  const locations = [
-    "Hiring in Bangalore",
-    "Hiring in Gurgaon",
-    "Hiring in Noida",
-    "Hiring in Mumbai",
-    "Hiring in Hyderabad",
-    "Hiring in Pune",
-  ];
-
-  const designations = [
-    "Hire Android Developers",
-    "Hire Full Stack Engineers",
-    "Hire Sales Executive",
-    "Hire Software Devops",
-    "Hire HR Recruiter",
-    "Hire Marketing Executives",
-  ];
-
   return (
     <footer className="footer">
       <div className="footer-content">

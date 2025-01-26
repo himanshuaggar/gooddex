@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from "react";
 import image1 from "../assets/image314.png";
-import image2 from "../assets/image123.png";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollSections } from "../hooks/useScroll";
 
