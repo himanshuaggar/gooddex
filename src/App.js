@@ -11,11 +11,14 @@ import HowItWorks from './components/HowItWorks';
 import FAQSection from './components/FAQ';
 import Banner from './components/Banner';
 import Footer from './components/Footer';
+import { FiExternalLink } from 'react-icons/fi';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 
 function App() {
 
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className="App">
@@ -28,17 +31,23 @@ function App() {
               className="logo"
             />
           </div>
+          <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
 
-          <div className="navbar__menu">
+          <div className={`navbar__menu ${isMenuOpen ? 'active' : ''}`}>
             <div className="dropdown">Products</div>
             <div className="dropdown">Company</div>
             <div className="link">Blogs</div>
             <div className="link">Pricing</div>
           </div>
 
-          <div className="navbar__actions">
+          <div className={`navbar__actions ${isMenuOpen ? 'active' : ''}`}>
             <button className="btn btn--secondary">Login/Signup</button>
-            <button className="btn btn--primary">Looking for a job?</button>
+            <button className="btn btn--primary">
+              Looking for job?
+              <FiExternalLink />
+            </button>
           </div>
         </nav>
 
@@ -62,11 +71,11 @@ function App() {
               />
               <button className="btn btn--primary">Try Now →</button>
             </div>
-            <div style={{ marginTop: "5rem" }}>
+            <div style={{ marginTop: "5rem" }} className='image-container'>
               <img
                 src={profcard}
                 alt="Profile"
-                className="avatar"
+                className="image"
               />
             </div>
           </section>
