@@ -100,8 +100,8 @@ function App() {
           </div>
 
           <div className={`navbar__actions ${isMenuOpen ? 'active' : ''}`}>
-            <button className="btn btn--secondary">Login/Signup</button>
-            <button className="btn btn--nav">
+            <button  onClick={() => window.location.href = 'https://goodspace.ai/'} className="btn btn--secondary">Login/Signup</button>
+            <button  onClick={() => window.location.href = 'https://goodspace.ai/'} className="btn btn--nav">
               Looking for job?{" "}
               <FiExternalLink size={16} />
             </button>

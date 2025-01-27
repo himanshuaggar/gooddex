@@ -416,13 +416,18 @@
   margin: 0 auto;
   padding: 0.5rem 0rem;
   border-radius: 8px;
+  font-family: $font-family-base;
 
   &__prefix {
+    display: flex;
     padding: 0.5rem 1rem;
     background: $gray-100;
     border-radius: 4px;
     align-items: center;
+    justify-content: center;
+    vertical-align: center;
     border: 2px solid $gray-200;
+    font-family: $font-family-base;
   }
 
   &__field {
@@ -767,12 +772,12 @@
       }
 
       @media (max-width: 768px) {
-        font-size: 4rem;
+        font-size: 3rem;
         margin-bottom: 1rem;
       }
 
       @media (max-width: 480px) {
-        font-size: 3rem;
+        font-size: 2.5rem;
         margin-bottom: 1rem;
       }
     }
@@ -1533,20 +1538,6 @@
   margin-top: 4rem;
   margin-bottom: 4rem;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100%;
-    background: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-7BpZTlf37OIrM0eEs8UGWKYFpgscPG.png")
-      no-repeat center right;
-    background-size: cover;
-    opacity: 0.1;
-    filter: blur(8px);
-  }
-
   &__container {
     width: 100%;
     display: grid;
@@ -1556,6 +1547,7 @@
     z-index: 1;
     overflow: hidden;
     border-radius: 50px;
+    height: 100vh;
   }
 
   &__content {
@@ -1564,6 +1556,8 @@
     justify-content: start;
     padding: 4rem;
     color: black;
+    height: 100vh;
+    overflow-y: auto;
 
     h2 {
       text-align: start;
@@ -1582,6 +1576,7 @@
   .step {
     display: flex;
     align-items: center;
+    transition: opacity 0.3s ease;
 
     .step-content {
       display: flex;
@@ -1617,9 +1612,9 @@
 
   &__visual {
     position: relative;
-    min-height: 100vh;
     background: url("../assets/bg.png") no-repeat center center;
     background-size: cover;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1641,20 +1636,14 @@
       z-index: 2;
       width: 90%;
       max-width: 700px;
-      background: white;
+      height: 80%;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease;
-
-      &:hover {
-        transform: translateY(-8px);
-      }
 
       img {
-        width: 100%;
+        width: auto;
         height: auto;
-        display: block;
+        object-fit: cover;
       }
     }
   }
@@ -1665,8 +1654,7 @@
     }
 
     &__visual {
-      min-height: 50vh;
-      // display: none;
+      height: 50vh;
     }
 
     .steps {

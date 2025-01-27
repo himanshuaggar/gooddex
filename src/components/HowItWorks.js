@@ -1,6 +1,6 @@
-import image1 from "../assets/image314.png";
-import { motion, AnimatePresence } from "framer-motion";
-import { useScrollSections } from "../hooks/useScroll";
+import React, { useRef, useEffect, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import image1 from "../assets/image314.png"
 
 const sections = [
   {
@@ -18,58 +18,74 @@ const sections = [
     description: "Dive deep into profiles",
     image: image1,
   },
-];
+]
 
 export default function HowItWorks() {
-  const { activeSection, setSectionRef } = useScrollSections(sections.length);
+  const [activeSection, setActiveSection] = useState(0)
+  const [allSectionsViewed, setAllSectionsViewed] = useState(false)
+  const sectionRefs = useRef([])
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY
+      const containerTop = containerRef.current.offsetTop
+      const containerHeight = containerRef.current.offsetHeight
+      const sectionHeight = containerHeight / sections.length
+
+      const newActiveSection = Math.floor((scrollPosition - containerTop) / sectionHeight)
+      if (newActiveSection >= 0 && newActiveSection < sections.length) {
+        setActiveSection(newActiveSection)
+        if (newActiveSection === sections.length - 1) {
+          setAllSectionsViewed(true)
+        }
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <div className="how-it-works">
+    <div className={`how-it-works ${allSectionsViewed ? "all-viewed" : ""}`} ref={containerRef}>
       <div className="how-it-works__container">
         <div className="how-it-works__content">
           <h2>How it works</h2>
           <div className="steps">
             {sections.map((section, index) => (
-              <div
+              <motion.div
                 key={index}
-                ref={setSectionRef(index)}
                 className={`step ${activeSection === index ? "active" : ""}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: activeSection === index ? 1 : 0.3, y: 0 }}
+                transition={{ duration: 0.5 }}
               >
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{
-                    opacity: activeSection === index ? 1 : 0.3,
-                    x: activeSection === index ? 0 : -20,
-                  }}
-                  transition={{ duration: 0.5 }}
-                  className="step-content"
-                >
+                <div className="step-content">
                   <div className="step-marker" />
                   <h3>{section.title}</h3>
-                </motion.div>
-              </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         <div className="how-it-works__visual">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeSection}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="image-container"
-            >
-              <img
+          <div className="image-container">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={activeSection}
                 src={sections[activeSection].image}
                 alt={sections[activeSection].title}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
               />
-            </motion.div>
-          </AnimatePresence>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
+

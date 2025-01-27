@@ -1,64 +1,63 @@
-import { useEffect, useState, useRef } from "react";
+import { useRef, useEffect } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import image1 from "../assets/image314.png"
+import { useScrollSections } from "../hooks/useScroll"
 
-export function useScrollSections(sections) {
-  const [activeSection, setActiveSection] = useState(0);
-  const sectionRefs = useRef([]);
-  const isScrollingRef = useRef(false);
-  const timeoutRef = useRef(null);
+const sections = [
+  {
+    title: "Describe your Dream profile",
+    description: "Dive deep into profiles",
+    image: image1,
+  },
+  {
+    title: "Make the best Hire",
+    description: "Select and connect with the perfect candidate",
+    image: image1,
+  },
+  {
+    title: "Describe your Dream profile",
+    description: "Dive deep into profiles",
+    image: image1,
+  },
+]
 
-  useEffect(() => {
-    sectionRefs.current = new Array(sections).fill(null);
+export default function HowItWorks() {
+  const containerRef = useRef < HTMLDivElement > (null)
+  const { activeSection, setSectionRef } = useScrollSections(sections.length)
 
-    const handleScroll = () => {
-      if (isScrollingRef.current) return;
-      
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  })
 
-      isScrollingRef.current = true;
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", `${(sections.length - 1) * 100}%`])
 
-      const viewportHeight = window.innerHeight;
-      const viewportCenter = viewportHeight / 2;
+  return (
+    <div className="how-it-works" ref={containerRef}>
+      <div className="how-it-works__container">
+        <div className="how-it-works__content">
+          <h2>How it works</h2>
+          <div className="steps">
+            {sections.map((section, index) => (
+              <div key={index} ref={setSectionRef(index)} className={`step ${activeSection === index ? "active" : ""}`}>
+                <div className="step-content">
+                  <div className="step-marker" />
+                  <h3>{section.title}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
-      let closestSection = 0;
-      let closestDistance = Infinity;
-
-      sectionRefs.current.forEach((section, index) => {
-        if (section) {
-          const rect = section.getBoundingClientRect();
-          const sectionCenter = rect.top + rect.height / 2;
-          const distance = Math.abs(viewportCenter - sectionCenter);
-
-          if (distance < closestDistance) {
-            closestDistance = distance;
-            closestSection = index;
-          }
-        }
-      });
-
-      setActiveSection(closestSection);
-
-      timeoutRef.current = setTimeout(() => {
-        isScrollingRef.current = false;
-      }, 50);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [sections]);
-
-  const setSectionRef = (index) => (element) => {
-    if (element) {
-      sectionRefs.current[index] = element;
-    }
-  };
-
-  return { activeSection, setSectionRef };
+        <motion.div className="how-it-works__visual" style={{ y }}>
+          {sections.map((section, index) => (
+            <div key={index} className={`image-container ${activeSection === index ? "active" : ""}`}>
+              <img src={section.image || "/placeholder.svg"} alt={section.title} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </div>
+  )
 }
+
