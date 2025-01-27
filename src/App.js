@@ -64,48 +64,48 @@ function App() {
             {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
 
-          <div className={`navbar__menu ${isMenuOpen ? 'active' : ''}`}>
-            <a
-              href="https://goodspace.ai/products"
-              className="dropdown"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Products <ChevronDown size={16} />
-            </a>
-            <a
-              href="https://goodspace.ai/company"
-              className="dropdown"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Company <ChevronDown size={16} />
-            </a>
-            <a
-              href="https://goodspace.ai/blogs"
-              className="link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Blogs
-            </a>
-            <a
-              href="https://goodspace.ai/pricing"
-              className="link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Pricing
-            </a>
-          </div>
+            <div className={`navbar__menu ${isMenuOpen ? 'active' : ''}`}>
+              <a
+                href="https://goodspace.ai/products"
+                className="dropdown"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Products
+              </a>
+              <a
+                href="https://goodspace.ai/company"
+                className="dropdown"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Company
+              </a>
+              <a
+                href="https://goodspace.ai/blogs"
+                className="link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Blogs
+              </a>
+              <a
+                href="https://goodspace.ai/pricing"
+                className="link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Pricing
+              </a>
+            </div>
 
-          <div className={`navbar__actions ${isMenuOpen ? 'active' : ''}`}>
-            <button  onClick={() => window.location.href = 'https://goodspace.ai/'} className="btn btn--secondary">Login/Signup</button>
-            <button  onClick={() => window.location.href = 'https://goodspace.ai/'} className="btn btn--nav">
-              Looking for job?{" "}
-              <FiExternalLink size={16} />
-            </button>
-          </div>
+            <div className={`navbar__actions ${isMenuOpen ? 'active' : ''}`}>
+              <button onClick={() => window.location.href = 'https://goodspace.ai/'} className="btn btn--secondary">Login/Signup</button>
+              <button onClick={() => window.location.href = 'https://goodspace.ai/'} className="btn btn--nav">
+                Looking for job?{" "}
+                <FiExternalLink size={16} />
+              </button>
+            </div>
         </nav>
 
         <main className="main">
