@@ -20,6 +20,8 @@ function App() {
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [error, setError] = useState("");
+
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -32,6 +34,19 @@ function App() {
       document.body.style.overflow = 'unset';
     };
   }, [isMenuOpen]);
+
+  const handlePhoneSubmit = (e) => {
+    e.preventDefault();
+
+    if (phoneNumber.length !== 10) {
+      setError("Please enter a valid 10-digit phone number");
+      return;
+    }
+
+    setError("");
+
+    window.location.href = `https://goodspace.ai/`;
+  };
 
 
   return (
@@ -102,17 +117,32 @@ function App() {
               Connect with the <span className="highlight">top talent</span> today!
             </h1>
 
-            <div className="phone-input">
+            <form onSubmit={handlePhoneSubmit} className="phone-input">
               <div className="phone-input__prefix">IN +91</div>
               <input
                 type="tel"
                 placeholder="Enter your contact number"
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                className="phone-input__field"
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, '');
+                  setPhoneNumber(value);
+                  setError("");
+                }}
+                required
+                maxLength="10"
+                pattern="[0-9]{10}"
+                className={`phone-input__field ${error ? 'error' : ''}`}
               />
-              <button className="btn btn--primary" style={{fontWeight:'600', fontSize:'1rem'}}>Try Now →</button>
-            </div>
+              <button
+                type="submit"
+                className="btn btn--primary"
+                style={{ fontWeight: '600', fontSize: '1rem' }}
+              >
+                Try Now →
+              </button>
+            </form>
+            {error && <p className="error-message">{error}</p>}
+
             <div className='image-container'>
               <img
                 src={profcard}
