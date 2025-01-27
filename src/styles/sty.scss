@@ -237,9 +237,7 @@
       color: $primary-blue;
       cursor: pointer;
       z-index: 100;
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
+      position: relative;
       font-size: 1.5rem;
     }
 
@@ -375,10 +373,14 @@
   .image-container {
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: -100px auto;
     transform: translateY(20%);
     position: relative;
     z-index: 1;
+
+    @media (max-width: 768px) {
+      margin: -50px auto;
+    }
 
     img {
       width: 100%;
@@ -414,9 +416,17 @@
 }
 
 .company-showcase {
-  padding: 6rem 2rem;
+  padding: 5rem 2rem;
+ margin-top: 10rem;
   text-align: center;
   animation: fadeIn 0.8s ease;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1rem;
+    margin-top: 3rem;
+    
+  }
+
 
   &__title {
     font-size: 1.5rem;
