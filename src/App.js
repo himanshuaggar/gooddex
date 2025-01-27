@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './styles/global.scss';
 import "./styles/sty.scss"
 import gooddex from './assets/gooddex.png';
@@ -20,6 +20,19 @@ function App() {
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
 
   return (
     <div className="App">
