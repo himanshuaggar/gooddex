@@ -28,16 +28,33 @@ export default function Footer() {
               </a>
             </div>
             <div className="social-links">
-              <a href="#" >
-                <FaInstagram color="#fff"  size={40} />
+              <a href="#" aria-label="Follow us on Instagram"
+                title="Follow us on Instagram"
+                target="_blank"
+                rel="noopener noreferrer" >
+                <FaInstagram color="#fff" size={40} />
               </a>
-              <a href="#" >
+              <a href="#"
+                aria-label="Connect with us on LinkedIn"
+                title="Connect with us on LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer" >
                 <FaLinkedinIn color="#fff" size={40} />
               </a>
-              <a href="#">
+              <a href="#"
+                aria-label="Like us on Facebook"
+                title="Like us on Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaFacebookF color="#fff" size={35} />
               </a>
-              <a href="#">
+              <a href="#"
+                aria-label="Follow us on Twitter"
+                title="Follow us on Twitter"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaTwitter color="#fff" size={40} />
               </a>
             </div>
