@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa6";
+import { GoPlus, } from "react-icons/go";
+import { HiMinus } from "react-icons/hi2";
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -49,13 +50,13 @@ export default function FAQSection() {
               className={`faq-item ${openIndex === index ? "active" : ""}`}
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
             >
-              <hr style={{ width:'100%' ,color:'#0066ff'}} />
+              <hr style={{ width:'100%' ,color:'#3770FF'}} />
               <div className="faq-question">
                 <span>{faq.question}</span>
                 {openIndex === index ? (
-                  <FaMinus className="icon" />
+                  <HiMinus className="icon" />
                 ) : (
-                  <FaPlus className="icon" />
+                  <GoPlus className="icon" />
                 )}
               </div>
               <div className="faq-answer">

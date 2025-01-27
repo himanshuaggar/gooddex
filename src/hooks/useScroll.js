@@ -2,47 +2,61 @@ import { useEffect, useState, useRef } from "react";
 
 export function useScrollSections(sections) {
   const [activeSection, setActiveSection] = useState(0);
-  const observers = useRef([]);
   const sectionRefs = useRef([]);
+  const isScrollingRef = useRef(false);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
     sectionRefs.current = new Array(sections).fill(null);
-    observers.current = new Array(sections).fill(null);
 
-    const createObserver = (index) => {
-      if (observers.current[index]) {
-        observers.current[index].disconnect();
+    const handleScroll = () => {
+      if (isScrollingRef.current) return;
+      
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
 
-      observers.current[index] = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveSection(index);
+      isScrollingRef.current = true;
+
+      const viewportHeight = window.innerHeight;
+      const viewportCenter = viewportHeight / 2;
+
+      let closestSection = 0;
+      let closestDistance = Infinity;
+
+      sectionRefs.current.forEach((section, index) => {
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          const sectionCenter = rect.top + rect.height / 2;
+          const distance = Math.abs(viewportCenter - sectionCenter);
+
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestSection = index;
           }
-        },
-        { threshold: 0.5 }
-      );
+        }
+      });
 
-      if (sectionRefs.current[index]) {
-        observers.current[index].observe(sectionRefs.current[index]);
-      }
+      setActiveSection(closestSection);
+
+      timeoutRef.current = setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 50);
     };
 
-    for (let i = 0; i < sections; i++) {
-      createObserver(i);
-    }
-
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => {
-      observers.current.forEach((observer) => observer?.disconnect());
+      window.removeEventListener('scroll', handleScroll);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     };
   }, [sections]);
 
   const setSectionRef = (index) => (element) => {
-    if (element && !sectionRefs.current[index]) {
+    if (element) {
       sectionRefs.current[index] = element;
-      if (observers.current[index]) {
-        observers.current[index].observe(element);
-      }
     }
   };
 

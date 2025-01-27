@@ -86,7 +86,7 @@ function App() {
 
           <div className={`navbar__actions ${isMenuOpen ? 'active' : ''}`}>
             <button className="btn btn--secondary">Login/Signup</button>
-            <button className="btn btn--primary">
+            <button className="btn btn--nav">
               Looking for job?{" "}
               <FiExternalLink size={16} />
             </button>
@@ -96,7 +96,7 @@ function App() {
         <main className="main">
           <section className="hero">
             <div className="welcome-badge">
-              ✨ WELCOME TO GOODSPACE AI
+              ✨<span className='welcome-text'> WELCOME TO GOODSPACE AI</span>
             </div>
             <h1 className="hero__title">
               Connect with the <span className="highlight">top talent</span> today!
@@ -111,7 +111,7 @@ function App() {
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 className="phone-input__field"
               />
-              <button className="btn btn--primary">Try Now →</button>
+              <button className="btn btn--primary" style={{fontWeight:'600', fontSize:'1rem'}}>Try Now →</button>
             </div>
             <div className='image-container'>
               <img
