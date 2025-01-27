@@ -22,6 +22,17 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [error, setError] = useState("");
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState({ code: 'IN', prefix: '+91' });
+
+  const countryCodes = [
+    { code: 'IN', prefix: '+91', name: 'India' },
+    { code: 'US', prefix: '+1', name: 'United States' },
+    { code: 'UK', prefix: '+44', name: 'United Kingdom' },
+    { code: 'CA', prefix: '+1', name: 'Canada' },
+    { code: 'AU', prefix: '+61', name: 'Australia' }
+  ];
+
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -64,48 +75,48 @@ function App() {
             {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
 
-            <div className={`navbar__menu ${isMenuOpen ? 'active' : ''}`}>
-              <a
-                href="https://goodspace.ai/products"
-                className="dropdown"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Products
-              </a>
-              <a
-                href="https://goodspace.ai/company"
-                className="dropdown"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Company
-              </a>
-              <a
-                href="https://goodspace.ai/blogs"
-                className="link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Blogs
-              </a>
-              <a
-                href="https://goodspace.ai/pricing"
-                className="link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Pricing
-              </a>
-            </div>
+          <div className={`navbar__menu ${isMenuOpen ? 'active' : ''}`}>
+            <a
+              href="https://goodspace.ai/products"
+              className="dropdown"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Products
+            </a>
+            <a
+              href="https://goodspace.ai/company"
+              className="dropdown"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Company
+            </a>
+            <a
+              href="https://goodspace.ai/blogs"
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Blogs
+            </a>
+            <a
+              href="https://goodspace.ai/pricing"
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Pricing
+            </a>
+          </div>
 
-            <div className={`navbar__actions ${isMenuOpen ? 'active' : ''}`}>
-              <button onClick={() => window.location.href = 'https://goodspace.ai/'} className="btn btn--secondary">Login/Signup</button>
-              <button onClick={() => window.location.href = 'https://goodspace.ai/'} className="btn btn--nav">
-                Looking for job?{" "}
-                <FiExternalLink size={16} />
-              </button>
-            </div>
+          <div className={`navbar__actions ${isMenuOpen ? 'active' : ''}`}>
+            <button onClick={() => window.location.href = 'https://goodspace.ai/'} className="btn btn--secondary">Login/Signup</button>
+            <button onClick={() => window.location.href = 'https://goodspace.ai/'} className="btn btn--nav">
+              Looking for job?{" "}
+              <FiExternalLink size={16} />
+            </button>
+          </div>
         </nav>
 
         <main className="main">
@@ -118,7 +129,31 @@ function App() {
             </h1>
 
             <form onSubmit={handlePhoneSubmit} className="phone-input">
-              <div className="phone-input__prefix">IN +91</div>
+              <div
+                className={`phone-input__prefix ${isDropdownOpen ? 'active' : ''}`}
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                {selectedCountry.code} {selectedCountry.prefix}
+                {isDropdownOpen && (
+                  <div className="country-dropdown">
+                    {countryCodes.map((country) => (
+                      <div
+                        key={country.code}
+                        className="country-option"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedCountry(country);
+                          setIsDropdownOpen(false);
+                        }}
+                      >
+                        <span>{country.code}</span>
+                        <span>{country.prefix}</span>
+                        <span>{country.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
               <input
                 type="tel"
                 placeholder="Enter your contact number"

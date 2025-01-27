@@ -5,84 +5,124 @@ import image1 from "../assets/image314.png"
 const sections = [
   {
     title: "Describe your Dream profile",
-    description: "Dive deep into profiles",
     image: image1,
   },
   {
     title: "Make the best Hire",
-    description: "Select and connect with the perfect candidate",
     image: image1,
   },
   {
     title: "Describe your Dream profile",
-    description: "Dive deep into profiles",
     image: image1,
   },
 ]
 
 export default function HowItWorks() {
   const [activeSection, setActiveSection] = useState(0)
-  const [allSectionsViewed, setAllSectionsViewed] = useState(false)
-  const sectionRefs = useRef([])
+  const [isFixed, setIsFixed] = useState(false)
   const containerRef = useRef(null)
+  const sectionRefs = useRef([])
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY
-      const containerTop = containerRef.current.offsetTop
-      const containerHeight = containerRef.current.offsetHeight
-      const sectionHeight = containerHeight / sections.length
-
-      const newActiveSection = Math.floor((scrollPosition - containerTop) / sectionHeight)
-      if (newActiveSection >= 0 && newActiveSection < sections.length) {
-        setActiveSection(newActiveSection)
-        if (newActiveSection === sections.length - 1) {
-          setAllSectionsViewed(true)
-        }
-      }
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.5,
     }
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = sectionRefs.current.indexOf(entry.target)
+          setActiveSection(index)
+        }
+      })
+    }, options)
+
+    // Observe each section
+    sectionRefs.current.forEach((section) => {
+      if (section) observer.observe(section)
+    })
+
+    // Observer for the container to handle fixed positioning
+    const containerObserver = new IntersectionObserver(
+      ([entry]) => {
+        setIsFixed(entry.isIntersecting)
+      },
+      { threshold: [0, 1] },
+    )
+
+    if (containerRef.current) {
+      containerObserver.observe(containerRef.current)
+    }
+
+    return () => {
+      observer.disconnect()
+      containerObserver.disconnect()
+    }
   }, [])
 
   return (
-    <div className={`how-it-works ${allSectionsViewed ? "all-viewed" : ""}`} ref={containerRef}>
-      <div className="how-it-works__container">
+    <div className="how-it-works" ref={containerRef}>
+      <div className={`how-it-works__container ${isFixed ? "fixed" : ""}`}>
         <div className="how-it-works__content">
           <h2>How it works</h2>
           <div className="steps">
             {sections.map((section, index) => (
               <motion.div
                 key={index}
+                ref={(el) => (sectionRefs.current[index] = el)}
                 className={`step ${activeSection === index ? "active" : ""}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: activeSection === index ? 1 : 0.3, y: 0 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{
+                  opacity: activeSection === index ? 1 : 0.3,
+                  x: activeSection === index ? 0 : -20,
+                }}
                 transition={{ duration: 0.5 }}
               >
                 <div className="step-content">
-                  <div className="step-marker" />
-                  <h3>{section.title}</h3>
+                  <motion.div
+                    className="step-marker"
+                    initial={{ scale: 0.8 }}
+                    animate={{
+                      scale: activeSection === index ? 1.2 : 1,
+                      backgroundColor: activeSection === index ? "#ffffff" : "rgba(255, 255, 255, 0.2)",
+                    }}
+                  />
+                  <motion.div
+                    initial={{ x: -10, opacity: 0 }}
+                    animate={{
+                      x: activeSection === index ? 0 : -10,
+                      opacity: activeSection === index ? 1 : 0.7,
+                    }}
+                  >
+                    <h3>{section.title}</h3>
+                  </motion.div>
                 </div>
               </motion.div>
             ))}
+            <motion.div
+              className="progress-indicator"
+              style={{
+                top: `${(activeSection * 100) / (sections.length - 1)}%`,
+              }}
+            />
           </div>
         </div>
 
         <div className="how-it-works__visual">
-          <div className="image-container">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={activeSection}
-                src={sections[activeSection].image}
-                alt={sections[activeSection].title}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-              />
-            </AnimatePresence>
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeSection}
+              className="image-container"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img src={sections[activeSection].image || "/placeholder.svg"} alt={sections[activeSection].title} />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </div>

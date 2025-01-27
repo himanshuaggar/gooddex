@@ -184,6 +184,8 @@
         width: 80%;
         max-width: 300px;
         text-align: center;
+        align-items: center;
+        justify-content: center;
         padding: 1rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
@@ -245,6 +247,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      text-align: center;
       gap: 2rem;
       transform: translateX(-100%);
       transition: transform 0.3s ease;
@@ -389,25 +392,69 @@
   padding: 0.5rem 0rem;
   border-radius: 8px;
   font-family: "Poppins", sans-serif;
+  position: relative;
 
   &__prefix {
+    position: relative;
     display: flex;
+    gap: 0.5rem;
     padding: 0.75rem 1rem;
-    background: $gray-100;
-    border-radius: 8px;
+    background: white;
+    border-radius: 8px 0px 0px 8px;
     align-items: center;
     justify-content: center;
     border: 2px solid $gray-200;
     font-family: inherit;
     font-size: 1rem;
     white-space: nowrap;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    .dropdown-icon {
+      transition: transform 0.3s ease;
+    }
+
+    &.active .dropdown-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  .country-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 250px;
+    max-height: 300px;
+    overflow-y: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+
+    .country-option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: $gray-100;
+      }
+
+      span:last-child {
+        margin-left: auto;
+        color: $gray-600;
+      }
+    }
   }
 
   &__field {
     flex: 1;
     border: 2px solid $gray-200;
     padding: 0.75rem 1rem;
-    border-radius: 8px;
+    border-radius: 0px 8px 8px 0px;
     outline: none;
     font-family: inherit;
     font-size: 1rem;
@@ -819,7 +866,7 @@
     }
 
     .icon {
-      background-color: #a6bff7;
+      background-color: rgba(166, 191, 247, 0.35);
       padding: 0.3rem 0.7rem;
       border-radius: 20px;
       transition: transform 0.3s ease;
