@@ -1584,6 +1584,10 @@
     overflow: hidden;
     border-radius: 50px;
     height: 100vh;
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
   }
 
   &__content {
@@ -1600,6 +1604,36 @@
       font-size: 3.5rem;
       font-weight: 400;
       margin-bottom: 4rem;
+    }
+
+    @media (max-width: 1024px) {
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      
+      h2 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        text-align: center;
+      }
+
+      .steps {
+        gap: 4rem;
+        padding: 2rem 0;
+      }
+
+      .step {
+        .step-content {
+          gap: 1rem;
+        }
+
+        h3 {
+          font-size: clamp(1.1rem, 3vw, 1.5rem);
+        }
+
+        .step-marker {
+          width: 20px;
+          height: 20px;
+        }
+      }
     }
   }
 
