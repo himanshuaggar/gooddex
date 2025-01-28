@@ -15,52 +15,65 @@ const sections = [
     title: "Describe your Dream profile",
     image: image1,
   },
+  {
+    title: "Describe your Dream profile",
+    image: image1,
+  },
 ]
 
 export default function HowItWorks() {
-  const [activeSection, setActiveSection] = useState(0)
-  const [isFixed, setIsFixed] = useState(false)
-  const containerRef = useRef(null)
-  const sectionRefs = useRef([])
+  const [activeSection, setActiveSection] = useState(0);
+  const [isFixed, setIsFixed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const containerRef = useRef(null);
+  const sectionRefs = useRef([]);
 
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.5,
-    }
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const index = sectionRefs.current.indexOf(entry.target)
-          setActiveSection(index)
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const containerRect = container.getBoundingClientRect();
+      const containerTop = containerRect.top;
+      const containerHeight = containerRect.height;
+      const windowHeight = window.innerHeight;
+
+      if (isMobile) {
+        // Mobile scroll behavior
+        const scrollProgress = Math.abs(window.scrollY - container.offsetTop);
+        const totalHeight = container.scrollHeight - windowHeight;
+        const newSection = Math.floor((scrollProgress / totalHeight) * sections.length);
+        setActiveSection(Math.min(newSection, sections.length - 1));
+      } else {
+        // Desktop scroll behavior
+        if (containerTop <= 0 && containerTop > -containerHeight + windowHeight) {
+          setIsFixed(true);
+          const scrollPosition = Math.abs(containerTop);
+          const sectionHeight = containerHeight / sections.length;
+          const newActiveSection = Math.min(
+            Math.floor(scrollPosition / sectionHeight),
+            sections.length - 1
+          );
+          setActiveSection(newActiveSection);
+        } else {
+          setIsFixed(false);
         }
-      })
-    }, options)
+      }
+    };
 
-    // Observe each section
-    sectionRefs.current.forEach((section) => {
-      if (section) observer.observe(section)
-    })
-
-    // Observer for the container to handle fixed positioning
-    const containerObserver = new IntersectionObserver(
-      ([entry]) => {
-        setIsFixed(entry.isIntersecting)
-      },
-      { threshold: [0, 1] },
-    )
-
-    if (containerRef.current) {
-      containerObserver.observe(containerRef.current)
-    }
-
-    return () => {
-      observer.disconnect()
-      containerObserver.disconnect()
-    }
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
 
   return (
     <div className="how-it-works" ref={containerRef}>
@@ -71,7 +84,6 @@ export default function HowItWorks() {
             {sections.map((section, index) => (
               <motion.div
                 key={index}
-                ref={(el) => (sectionRefs.current[index] = el)}
                 className={`step ${activeSection === index ? "active" : ""}`}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{
@@ -101,12 +113,6 @@ export default function HowItWorks() {
                 </div>
               </motion.div>
             ))}
-            <motion.div
-              className="progress-indicator"
-              style={{
-                top: `${(activeSection * 100) / (sections.length - 1)}%`,
-              }}
-            />
           </div>
         </div>
 
@@ -128,4 +134,3 @@ export default function HowItWorks() {
     </div>
   )
 }
-

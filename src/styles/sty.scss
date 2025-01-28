@@ -722,7 +722,7 @@
     img {
       width: 100%;
       height: auto;
-      display: block;
+      display: cover;
     }
 
     &::after {
@@ -772,10 +772,18 @@
 
 .faq-section {
   padding: 4rem 2rem;
+  margin-top: -40rem;
+  transform: translateY(50px);
+  transition: all 0.5s ease;
+  z-index: 99;
+  margin-bottom: 10rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     padding: 2rem 1rem;
+    margin-bottom: 7rem;
+    margin-top: 0rem;
   }
+  
 
   .faq-container {
     max-width: 1200px;
@@ -1227,7 +1235,7 @@
   img {
     width: 120px;
     height: 120px;
-    object-fit: contain;
+    object-fit: scale-down;
     margin-top: 1rem;
     animation: float 3s ease-in-out infinite;
     transition: transform 0.3s ease;
@@ -1572,7 +1580,8 @@
   overflow: hidden;
   border-radius: 50px;
   margin-top: 4rem;
-  margin-bottom: 4rem;
+  margin-bottom: 0;
+  height: calc(100vh * 3);
 
   &__container {
     width: 100%;
@@ -1584,9 +1593,12 @@
     overflow: hidden;
     border-radius: 50px;
     height: 100vh;
-    @media (max-width: 1024px) {
-      grid-template-columns: 1fr;
-      gap: 2rem;
+
+    &.fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
     }
   }
 
@@ -1605,36 +1617,6 @@
       font-weight: 400;
       margin-bottom: 4rem;
     }
-
-    @media (max-width: 1024px) {
-      padding: 3rem 2rem;
-      border-radius: 20px;
-      
-      h2 {
-        font-size: clamp(2rem, 5vw, 3rem);
-        text-align: center;
-      }
-
-      .steps {
-        gap: 4rem;
-        padding: 2rem 0;
-      }
-
-      .step {
-        .step-content {
-          gap: 1rem;
-        }
-
-        h3 {
-          font-size: clamp(1.1rem, 3vw, 1.5rem);
-        }
-
-        .step-marker {
-          width: 20px;
-          height: 20px;
-        }
-      }
-    }
   }
 
   .steps {
@@ -1646,7 +1628,7 @@
   .step {
     display: flex;
     align-items: center;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
 
     .step-content {
       display: flex;
@@ -1706,102 +1688,112 @@
       z-index: 2;
       width: 90%;
       max-width: 700px;
-      height: 80%;
+      height: auto;
       border-radius: 16px;
       overflow: hidden;
 
       img {
-        width: auto;
-        height: auto;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
       }
     }
   }
 
   @media (max-width: 1024px) {
+    width: 100%;
+    margin: 2rem 0;
+    height: auto;
+    border-radius: 30px;
+    overflow: visible;
+
     &__container {
-      display: grid;
-      grid-template-columns: 0.4fr 0.6fr;
-      gap: 2rem;
-      min-height: 100vh;
-      position: relative;
+      grid-template-columns: 1fr;
+      height: auto;
+      border-radius: 30px;
+
+      &.fixed {
+        position: relative;
+      }
     }
 
     &__content {
-      width: 100%;
-      height: 100%;
-      padding: 2rem 1.5rem;
-      overflow: hidden;
-      background: linear-gradient(135deg, #6790f5 0%, #d1ddf6 100%);
-      border-radius: 30px;
+      padding: 3rem 2rem;
+      height: auto;
+      overflow: visible;
 
       h2 {
+        font-size: clamp(2rem, 5vw, 3rem);
         margin-bottom: 2rem;
       }
 
       .steps {
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 0;
+        gap: 3rem;
+        padding: 1rem 0;
       }
 
       .step {
-        opacity: 0.4;
-        transform: translateX(-20px);
-        transition: all 0.4s ease;
-
-        &.active {
-          opacity: 1;
-          transform: translateX(0);
-
-          .step-marker {
-            transform: scale(1.2);
-          }
-        }
+        opacity: 1;
+        transform: none;
 
         .step-content {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
+          gap: 1rem;
         }
 
         .step-marker {
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.2);
-          transition: all 0.4s ease;
+          width: 20px;
+          height: 20px;
         }
 
         h3 {
-          font-size: 1.2rem;
-          margin: 0;
-          transition: all 0.4s ease;
+          font-size: clamp(1.1rem, 4vw, 1.5rem);
+        }
+
+        &.active {
+          .step-marker {
+            background: white;
+            transform: scale(1.1);
+          }
         }
       }
     }
 
     &__visual {
-      position: sticky;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 50vh;
+      min-height: 300px;
       padding: 2rem;
 
       .image-container {
         width: 90%;
         max-width: 500px;
-        height: auto;
         margin: 0 auto;
 
         img {
           width: 100%;
           height: auto;
           object-fit: contain;
-          transition: all 0.4s ease;
         }
       }
+    }
+  }
+  @media (max-width: 768px) {
+    margin: 1rem 0;
+
+    &__content {
+      padding: 2rem 1rem;
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      .steps {
+        gap: 2rem;
+      }
+    }
+
+    &__visual {
+      height: 40vh;
+      min-height: 250px;
     }
   }
 }
