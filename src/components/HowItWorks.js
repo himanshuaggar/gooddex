@@ -8,15 +8,15 @@ const sections = [
     image: image1,
   },
   {
-    title: "Make the best Hire",
+    title: "Deep Dive into Profile",
     image: image1,
   },
   {
-    title: "Describe your Dream profile",
+    title: "Make the Best Hire",
     image: image1,
   },
   {
-    title: "Describe your Dream profile",
+    title: "Make the Best Hire",
     image: image1,
   },
 ]
