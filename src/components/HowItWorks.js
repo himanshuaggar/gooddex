@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import image1 from "../assets/image314.png";
+import React, { useRef, useEffect, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import image1 from "../assets/image314.png"
 
 const sections = [
   {
@@ -19,73 +19,69 @@ const sections = [
     title: "Make the Best Hire",
     image: image1,
   },
-];
+]
 
 export default function HowItWorks() {
-  const [activeSection, setActiveSection] = useState(0);
-  const [isFixed, setIsFixed] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const containerRef = useRef(null);
-  const sectionRefs = useRef([]);
+  const [activeSection, setActiveSection] = useState(0)
+  const [isFixed, setIsFixed] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const containerRef = useRef(null)
+  const sectionRefs = useRef([])
 
-  const safeActiveSection = Math.max(0, Math.min(activeSection, sections.length - 1));
-
-  useEffect(() => {
-    if (activeSection >= sections.length) {
-      setActiveSection(0);
-    }
-  }, [activeSection]);
+  const safeActiveSection = Math.max(0, Math.min(activeSection, sections.length - 1))
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 1024);
-    };
+      setIsMobile(window.innerWidth <= 768)
+    }
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
-      const container = containerRef.current;
-      if (!container) return;
+      const container = containerRef.current
+      if (!container) return
 
-      const containerRect = container.getBoundingClientRect();
-      const containerTop = containerRect.top;
-      const containerHeight = containerRect.height;
-      const windowHeight = window.innerHeight;
+      const containerRect = container.getBoundingClientRect()
+      const containerTop = containerRect.top
+      const containerHeight = containerRect.height
+      const windowHeight = window.innerHeight
 
       if (isMobile) {
-        const scrollProgress = Math.abs(window.scrollY - container.offsetTop);
-        const totalHeight = container.scrollHeight - windowHeight;
-        const newSection = Math.floor((scrollProgress / totalHeight) * sections.length);
-        setActiveSection(Math.min(newSection, sections.length - 1));
+        const scrollProgress = window.scrollY - container.offsetTop
+        const totalHeight = containerHeight - windowHeight
+        const sectionHeight = totalHeight / (sections.length - 1)
+
+        const newSection = Math.floor(scrollProgress / (sectionHeight * 1.5))
+
+        const reversedSection = sections.length - 1 - newSection
+
+        setActiveSection(Math.max(0, Math.min(reversedSection, sections.length - 1)))
       } else {
         if (containerTop <= 0 && containerTop > -containerHeight + windowHeight) {
-          setIsFixed(true);
-          const scrollPosition = Math.abs(containerTop);
-          const sectionHeight = containerHeight / sections.length;
-          const newActiveSection = Math.min(
-            Math.floor(scrollPosition / sectionHeight),
-            sections.length - 1
-          );
-          setActiveSection(newActiveSection);
+          setIsFixed(true)
+          const scrollPosition = Math.abs(containerTop)
+          const sectionHeight = containerHeight / sections.length
+          const newActiveSection = Math.min(Math.floor(scrollPosition / sectionHeight), sections.length - 1)
+          setActiveSection(newActiveSection)
         } else {
-          setIsFixed(false);
+          setIsFixed(false)
         }
       }
-    };
+    }
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobile]);
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [isMobile])
 
-  const currentSection = sections[safeActiveSection] || sections[0];
+  const currentSection = sections[safeActiveSection] || sections[0]
 
   return (
     <div className="how-it-works" ref={containerRef}>
-      <div className={`how-it-works__container ${isFixed ? "fixed" : ""}`}>
+      <div className={`how-it-works__container ${isFixed && !isMobile ? "fixed" : ""}`}>
         <div className="how-it-works__content">
           <h2>How it works</h2>
           <div className="steps">
@@ -139,7 +135,7 @@ export default function HowItWorks() {
                 src={currentSection.image || "/placeholder.svg"}
                 alt={currentSection.title || "Section Image"}
                 onError={(e) => {
-                  e.target.src = "/placeholder.svg";
+                  e.target.src = "/placeholder.svg"
                 }}
               />
             </motion.div>
@@ -147,5 +143,6 @@ export default function HowItWorks() {
         </div>
       </div>
     </div>
-  );
+  )
 }
+

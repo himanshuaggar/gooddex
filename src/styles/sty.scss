@@ -301,7 +301,6 @@
     @media (max-width: 480px) {
       padding: 0.5rem 1rem;
       font-size: 0.75rem;
-      
     }
   }
 
@@ -346,9 +345,8 @@
   overflow: visible;
   margin-bottom: 5rem;
 
-  @media (max-width:480px) {
+  @media (max-width: 480px) {
     padding: 2rem 0.5rem;
-    
   }
 
   .hero__title {
@@ -393,7 +391,6 @@
     }
     @media (max-width: 480px) {
       margin: -30px auto;
-      
     }
 
     img {
@@ -446,7 +443,6 @@
     @media (max-width: 768px) {
       padding: 0.75rem 0.5rem;
       font-size: 0.75rem;
-      
     }
   }
 
@@ -508,11 +504,11 @@
       font-size: 0.75rem;
       border-radius: 8px;
       width: 100%;
-  
+
       &::placeholder {
         font-size: 0.75rem;
       }
-  
+
       &:focus {
         box-shadow: 0 0 0 3px rgba($primary-blue, 0.1);
       }
@@ -831,7 +827,6 @@
     margin-bottom: 7rem;
     margin-top: 0rem;
   }
-  
 
   .faq-container {
     max-width: 1200px;
@@ -952,6 +947,7 @@
       @media (max-width: 768px) {
         font-size: 0.9rem;
         line-height: 1.5;
+        text-align: center;
       }
     }
   }
