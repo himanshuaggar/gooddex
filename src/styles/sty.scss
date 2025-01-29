@@ -346,6 +346,11 @@
   overflow: visible;
   margin-bottom: 5rem;
 
+  @media (max-width:480px) {
+    padding: 2rem 1rem;
+    
+  }
+
   .hero__title {
     color: #2b5fff;
   }
@@ -403,10 +408,15 @@
   display: flex;
   max-width: 500px;
   margin: 0 auto;
+  width: 90%;
   padding: 0.5rem 0rem;
   border-radius: 8px;
   font-family: "Poppins", sans-serif;
   position: relative;
+
+  @media (max-width: 480px) {
+    width: 100%;
+  }
 
   &__prefix {
     position: relative;
@@ -434,6 +444,7 @@
 
     @media (max-width: 768px) {
       padding: 0.75rem 0.5rem;
+      font-size: 0.75rem;
       
     }
   }
