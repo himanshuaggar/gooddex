@@ -29,6 +29,12 @@ export default function HowItWorks() {
   const sectionRefs = useRef([]);
 
   useEffect(() => {
+    if (activeSection >= sections.length) {
+      setActiveSection(0);
+    }
+  }, [activeSection]);
+
+  useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 1024);
     };
@@ -126,7 +132,9 @@ export default function HowItWorks() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
             >
-              <img src={sections[activeSection].image || "/placeholder.svg"} alt={sections[activeSection].title} />
+              <img src={sections[activeSection].image || "/placeholder.svg"} alt={sections[activeSection].title} onError={(e) =>{
+                e.target.src = "/placeholder.svg";
+              }} />
             </motion.div>
           </AnimatePresence>
         </div>
