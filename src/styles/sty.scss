@@ -286,12 +286,22 @@
     padding: 1rem 2rem;
     animation: gradientRotate 8s ease infinite;
     transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1rem;
 
     &:hover {
       transform: translateY(-2px);
       background-size: 400% 100%;
       animation: gradientRotate 4s ease infinite;
       box-shadow: 0 4px 15px rgba(55, 112, 255, 0.4);
+    }
+    @media (max-width: 768px) {
+      padding: 0.75rem 1.5rem;
+    }
+    @media (max-width: 480px) {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      
     }
   }
 
@@ -416,6 +426,11 @@
 
     &.active .dropdown-icon {
       transform: rotate(180deg);
+    }
+
+    @media (max-width: 768px) {
+      padding: 0.75rem 0.5rem;
+      
     }
   }
 

@@ -171,7 +171,6 @@ function App() {
               <button
                 type="submit"
                 className="btn btn--primary"
-                style={{ fontWeight: '600', fontSize: '1rem' }}
               >
                 Try Now →
               </button>

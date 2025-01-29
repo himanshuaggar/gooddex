@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import image1 from "../assets/image314.png"
+import React, { useRef, useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import image1 from "../assets/image314.png";
 
 const sections = [
   {
@@ -19,7 +19,7 @@ const sections = [
     title: "Make the Best Hire",
     image: image1,
   },
-]
+];
 
 export default function HowItWorks() {
   const [activeSection, setActiveSection] = useState(0);
@@ -27,6 +27,8 @@ export default function HowItWorks() {
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
   const sectionRefs = useRef([]);
+
+  const safeActiveSection = Math.max(0, Math.min(activeSection, sections.length - 1));
 
   useEffect(() => {
     if (activeSection >= sections.length) {
@@ -55,13 +57,11 @@ export default function HowItWorks() {
       const windowHeight = window.innerHeight;
 
       if (isMobile) {
-        // Mobile scroll behavior
         const scrollProgress = Math.abs(window.scrollY - container.offsetTop);
         const totalHeight = container.scrollHeight - windowHeight;
         const newSection = Math.floor((scrollProgress / totalHeight) * sections.length);
         setActiveSection(Math.min(newSection, sections.length - 1));
       } else {
-        // Desktop scroll behavior
         if (containerTop <= 0 && containerTop > -containerHeight + windowHeight) {
           setIsFixed(true);
           const scrollPosition = Math.abs(containerTop);
@@ -81,6 +81,8 @@ export default function HowItWorks() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMobile]);
 
+  const currentSection = sections[safeActiveSection] || sections[0];
+
   return (
     <div className="how-it-works" ref={containerRef}>
       <div className={`how-it-works__container ${isFixed ? "fixed" : ""}`}>
@@ -90,11 +92,12 @@ export default function HowItWorks() {
             {sections.map((section, index) => (
               <motion.div
                 key={index}
-                className={`step ${activeSection === index ? "active" : ""}`}
+                className={`step ${safeActiveSection === index ? "active" : ""}`}
                 initial={{ opacity: 0, x: -20 }}
+                ref={(el) => (sectionRefs.current[index] = el)}
                 animate={{
-                  opacity: activeSection === index ? 1 : 0.3,
-                  x: activeSection === index ? 0 : -20,
+                  opacity: safeActiveSection === index ? 1 : 0.3,
+                  x: safeActiveSection === index ? 0 : -20,
                 }}
                 transition={{ duration: 0.5 }}
               >
@@ -103,15 +106,15 @@ export default function HowItWorks() {
                     className="step-marker"
                     initial={{ scale: 0.8 }}
                     animate={{
-                      scale: activeSection === index ? 1.2 : 1,
-                      backgroundColor: activeSection === index ? "#ffffff" : "rgba(255, 255, 255, 0.2)",
+                      scale: safeActiveSection === index ? 1.2 : 1,
+                      backgroundColor: safeActiveSection === index ? "#ffffff" : "rgba(255, 255, 255, 0.2)",
                     }}
                   />
                   <motion.div
                     initial={{ x: -10, opacity: 0 }}
                     animate={{
-                      x: activeSection === index ? 0 : -10,
-                      opacity: activeSection === index ? 1 : 0.7,
+                      x: safeActiveSection === index ? 0 : -10,
+                      opacity: safeActiveSection === index ? 1 : 0.7,
                     }}
                   >
                     <h3>{section.title}</h3>
@@ -125,20 +128,24 @@ export default function HowItWorks() {
         <div className="how-it-works__visual">
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeSection}
+              key={safeActiveSection}
               className="image-container"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
             >
-              <img src={sections[activeSection].image || "/placeholder.svg"} alt={sections[activeSection].title} onError={(e) =>{
-                e.target.src = "/placeholder.svg";
-              }} />
+              <img
+                src={currentSection.image || "/placeholder.svg"}
+                alt={currentSection.title || "Section Image"}
+                onError={(e) => {
+                  e.target.src = "/placeholder.svg";
+                }}
+              />
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
     </div>
-  )
+  );
 }
