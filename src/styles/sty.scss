@@ -416,6 +416,7 @@
 
   @media (max-width: 480px) {
     width: 100%;
+    max-width: 450px;
   }
 
   &__prefix {
@@ -500,6 +501,21 @@
     &:focus {
       border-color: $primary-blue;
       box-shadow: 0 0 0 4px rgba($primary-blue, 0.1);
+    }
+
+    @media (max-width: 480px) {
+      padding: 0.65rem 0.75rem;
+      font-size: 0.75rem;
+      border-radius: 8px;
+      width: 100%;
+  
+      &::placeholder {
+        font-size: 0.75rem;
+      }
+  
+      &:focus {
+        box-shadow: 0 0 0 3px rgba($primary-blue, 0.1);
+      }
     }
   }
 
@@ -807,6 +823,8 @@
   transition: all 0.5s ease;
   z-index: 99;
   margin-bottom: 10rem;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 
   @media (max-width: 1024px) {
     padding: 2rem 1rem;
@@ -897,6 +915,7 @@
     align-items: center;
     color: $primary-blue;
     font-weight: 500;
+    -webkit-tap-highlight-color: transparent;
 
     @media (max-width: 768px) {
       font-size: 1rem;
